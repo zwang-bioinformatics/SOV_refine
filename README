@@ -1,0 +1,63 @@
+
+Last update: 03/03/2018
+
+------------------------------
+1. Introduction
+------------------------------
+The script "SOV_refine.pl" can calculate the modified SOV score (Zemla, A. et al., 1999)
+and the further refined SOV_refine score. The latter redefined the assignment
+of allowance, which can ensure that the amount of allowance is incremental
+when one more element in the predicted sequence is further predicted accurately. 
+
+We found that SOV_refine is a better measure than SOV'99 when we attempt to evaluate the
+quality of protein models at the secondaty structure level.
+
+It should be noted that this script can handle unlimited number of states in a
+reference sequence and different labels (26 English letters) for denoting distinct states. 
+But we don't recommend to use it when the number of states is too large (e.g., 10). 
+
+------------------------------
+2. Usage 
+------------------------------
+It can be used on any platform with Perl interpreter. In order to run "SOV_refine.pl", 
+you need to provide at least the first two parameters. 
+
+"./SOV_refine.pl (1) (2) (3)"
+  (1) is the reference sequence file and should be in fasta format;
+  (2) is the predicted sequence file and also should be in fasta format;
+  (3) is the lambda value. Its default value is 1 for calculating SOV_refine. Based on our experience, you can set its value to one of the values in the range [0.1, 2]. 
+
+An example
+"./SOV_refine.pl exmp/test1.fasta exmp/test2.fasta"
+
+------------------------------
+3. Output 
+------------------------------
+The details about SOV scores for each state and the reference sequence will be
+printed on the screen. The output of the example given above is shown below:
+
+--------------------- 
+N_L	17
+N_S	2
+Lambda	1
+SOV_99_i	A	0.875
+SOV_refine_i	A	0.852
+SOV_99_i	B	0.500
+SOV_refine_i	B	0.465
+Accuracy	0.588
+SOV_99	0.650
+SOV_refine	0.620
+---------------------
+
+(a). "N_L 17" means that the length of the reference sequence is 17.
+(b). "N_S 2" indicates that the total number of states in the reference
+sequence is 2.
+(c) "Lambda" indicates the lambda value used in calculating SOV_refine.
+(d) The rows started with "SOV_99_i" contain three items: the secondary item denotes
+the current state, while the third item is the SOV_99 score for this state;
+(e) The rows started with "SOV_refine_i" contain three items: the secondary item denotes
+the current state, while the third item is the SOV_refine score for this state;
+(f) The global accuracy and SOV scores for all states are given in the rows started with
+"Accuracy", "SOV_99", "SOV_refine". In this example, the three global scores are 0.588, 0.65, and 0.62 respectively.
+
+ 
